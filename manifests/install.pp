@@ -4,7 +4,6 @@
 #
 class confluence::install {
 
-  include '::archive'
 
   if $::confluence::manage_user {
     group { $confluence::group:
@@ -65,6 +64,7 @@ class confluence::install {
       }
     }
     'archive': {
+      include '::archive'
       archive { "/tmp/${file}":
         ensure          => present,
         extract         => true,
