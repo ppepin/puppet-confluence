@@ -46,6 +46,9 @@ class confluence (
   $tomcat_extras = {},
   $context_path  = '',
 
+  # AppLink port for application link which bypasses proxy
+  $applink_port = undef,
+
   # Command to stop confluence in preparation to updgrade. This is configurable
   # incase the confluence service is managed outside of puppet. eg: using the
   # puppetlabs-corosync module: 'crm resource stop confluence && sleep 15'
