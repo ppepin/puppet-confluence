@@ -1,18 +1,17 @@
 <Server port="8000" shutdown="SHUTDOWN" debug="0">
     <Service name="Tomcat-Standalone">
+
         <!-- Connector for Confluences's reverse proxy -->
-        <Connector className="org.apache.coyote.tomcat4.CoyoteConnector"
-		              port="<%= @tomcat_port %>"
-                  minProcessors="5"
-                  maxProcessors="75"
-                  enableLookups="false"
-                  redirectPort="8443"
-                  debug="0"
+        <Connector port="<%= @tomcat_port %>"
                   connectionTimeout="20000"
-                  useURIValidationHack="false"
-                  URIEncoding="UTF-8"
-              	  maxThreads="<%= @tomcat_max_threads %>"
+                  redirectPort="8443"
+                  maxThreads="<%= @tomcat_max_threads %>"
+                  minSpareThreads="10"
+                  enableLookups="false"
                   acceptCount="<%= @tomcat_accept_count %>"
+                  debug="0"
+                  URIEncoding="UTF-8"
+                  protocol="org.apache.coyote.http11.Http11NioProtocol"                 
 <% if @tomcat_proxy -%>
 <%   @tomcat_proxy.sort.each do |key,value| -%>
                   <%= key %>=<%= "\"#{value}\"" %>
@@ -24,10 +23,10 @@
 <% if @applink_port -%>
         <!-- Connector for app link to Jira -->
         <Connector port="<%= @applink_port%>"
-                  connectionTimeout="<%= @tomcat_connection_timeout %>"
-                  maxThreads="<%= @tomcat_max_threads %>"
-                  minSpareThreads="<%= @tomcat_min_spare_threads %>" 
-                  enableLookups="<%= @tomcat_enable_lookups %>"
+                  connectionTimeout="20000"
+                  maxThreads="200"
+                  minSpareThreads="10" 
+                  enableLookups="false"
                   acceptCount="10"
                   URIEncoding="UTF-8"
         />
