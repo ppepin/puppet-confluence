@@ -30,6 +30,16 @@ class confluence::config(
     notify  => Class['confluence::service'],
   }
 
+  file { "${confluence::webappdir}/bin/user.sh":
+    content => template('confluence/user.sh.erb'),
+    mode    => '0755',
+    require => [
+      Class['confluence::install'],
+      File[$confluence::webappdir],
+      File[$confluence::homedir],
+    ],
+  }
+
   if $manage_server_xml == 'augeas' {
     $_tomcat_max_threads  = { maxThreads  => $tomcat_max_threads }
     $_tomcat_accept_count = { acceptCount => $tomcat_accept_count }

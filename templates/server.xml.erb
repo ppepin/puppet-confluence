@@ -1,4 +1,4 @@
-<Server port="8000" shutdown="SHUTDOWN" debug="0">
+<Server port="8000" shutdown="SHUTDOWN">
     <Service name="Tomcat-Standalone">
 
         <!-- Connector for Confluences's reverse proxy -->
@@ -9,7 +9,6 @@
                   minSpareThreads="10"
                   enableLookups="false"
                   acceptCount="<%= @tomcat_accept_count %>"
-                  debug="0"
                   URIEncoding="UTF-8"
                   protocol="org.apache.coyote.http11.Http11NioProtocol"                 
 <% if @tomcat_proxy -%>
@@ -32,9 +31,9 @@
         />
 <% end -%>
 
-        <Engine name="Standalone" defaultHost="localhost" debug="0">
+        <Engine name="Standalone" defaultHost="localhost">
 
-            <Host name="localhost" debug="0" appBase="webapps" unpackWARs="true" autoDeploy="false">
+            <Host name="localhost" appBase="webapps" unpackWARs="true" autoDeploy="false">
 
                 <Context path="<%= @context_path %>" docBase="../confluence" reloadable="false" useHttpOnly="true">
                     <!-- Logger is deprecated in Tomcat 5.5. Logging configuration for Confluence is specified in confluence/WEB-INF/classes/log4j.properties -->
